@@ -61,7 +61,7 @@ public class PlaceholderFragment extends Fragment {
         recyclerView.setAdapter(playlistItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        playlistItemAdapter.setListItems(DynamicConstants.allPlayListItems.get(pageNumber).getPlaylists());
+       // playlistItemAdapter.setListItems(DynamicConstants.allPlayListItems.get(pageNumber).getPlaylists());
 
         return rootView;
     }

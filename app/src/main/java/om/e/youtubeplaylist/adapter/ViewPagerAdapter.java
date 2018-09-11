@@ -3,6 +3,7 @@ package om.e.youtubeplaylist.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import om.e.youtubeplaylist.constants.DynamicConstants;
 import om.e.youtubeplaylist.fragment.VideoFragment;
 import om.e.youtubeplaylist.model.Playlists;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     //public ArrayList<Playlists> playlists=new ArrayList<>();
     ArrayList<Integer> listPages=new ArrayList<>();

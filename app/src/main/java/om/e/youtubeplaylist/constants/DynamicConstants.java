@@ -12,4 +12,5 @@ public class DynamicConstants {
     public static ArrayList<AllPlayLists> allPlayListItems;
     public static int pageCount;
     public static int currentPage=0;
+    public static int videoCount=0;
 }
