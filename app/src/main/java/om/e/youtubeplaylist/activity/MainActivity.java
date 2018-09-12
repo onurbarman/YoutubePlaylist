@@ -56,17 +56,22 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<PlaylistItems> playlistItems;
     ArrayList<PlaylistWithPage> playlistWithPage;
 
-
     String playlistURL="https://www.googleapis.com/youtube/v3/playlists?part=snippet&key=AIzaSyBU3bJ7N-RYuV76huwEB4eHGrXdS-cdTIc&channelId=UCgKabubhWZaEOsTQM-FrAsw&maxResults=25";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initToolbar();
+        playlists=new ArrayList<>();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getAllPlaylists();
     }
 
-    private void getAllPlaylists() {
+
+    void getAllPlaylists()
+    {
 
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest=new StringRequest(Request.Method.GET, playlistURL, new Response.Listener<String>() {
@@ -91,8 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         playlist.setPlaylistName(jsonsnippet.getString("title"));
                         playlists.add(playlist);
                     }
-                    DynamicConstants.playlists=playlists;
-                    initViewPager();
+                    DynamicConstants.playlists =playlists;
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -104,19 +108,21 @@ public class MainActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+
         int socketTimeout = 30000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         stringRequest.setRetryPolicy(policy);
         requestQueue.add(stringRequest);
+
+        initViewPager();
+
     }
 
-    private void initList() {
-        playlists=new ArrayList<>();
-        getAllPlaylists();
-    }
 
-    private void initViewPager() {
-        if (playlists.size()-1>=DynamicConstants.currentPage) {
+    void initViewPager()
+    {
+        if ( DynamicConstants.playlists.size()-1>=DynamicConstants.currentPage)
+        {
             pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
             viewpager = (ViewPager) findViewById(R.id.viewpager);
             CircleIndicator indicator = (CircleIndicator) findViewById(R.id.tabs);
@@ -125,17 +131,10 @@ public class MainActivity extends AppCompatActivity {
             viewpager.setAdapter(pagerAdapter);
             indicator.setViewPager(viewpager);
             pagerAdapter.registerDataSetObserver(indicator.getDataSetObserver());
-
-            initList();
         }
     }
 
-    private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        initList();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
